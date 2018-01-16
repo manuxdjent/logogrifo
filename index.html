@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <link rel="stylesheet" href="estilo.css">
     <title>Logogrifo</title>
   </head>
   <body>
@@ -11,9 +12,9 @@
     <div id="res">
 
     </div>
-    <!-- <div class="palabras">
+    <div class="pruebas">
 
-    </div> -->
+    </div>
     <script
 src="https://code.jquery.com/jquery-3.2.1.js"
 integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
@@ -28,6 +29,7 @@ crossorigin="anonymous"></script>
             var dic =  new Array();
             var numeros = 0;
             var letrasPalabrasUnique;
+            var html = "";
             // Prototype para eliminar elementos repetidos en un array.
             Array.prototype.unique = function() {
               return this.filter(function (value, index, self) {
@@ -44,22 +46,37 @@ crossorigin="anonymous"></script>
           $(document).ready(function(){
             var randomIndex = Math.floor((Math.random() * arrayPalabras.length));
             for (var i = 0; i < 7; i++) {
-              showData.append("<div class='row'>");
+              html += "<div class='divPalabra'>";
               for (var e = 0; e < arrayPalabras[randomIndex].length; e++) {
-                showData.append("<input type='text' size='1' maxlength='1'/>");
+                html += "<input type='text' size='1' maxlength='1'/>";
                 letrasPalabras.push(arrayPalabras[randomIndex][e]);
               }
-              showData.append("</div>");
+              html += "</div>";
               arrayPalabras.splice(randomIndex, 1);
-              showData.append("<p>"+arrayPistas[randomIndex]+"</p>");
+              html += "<p>"+arrayPistas[randomIndex]+"</p>";
               arrayPistas.splice(randomIndex, 1);
               randomIndex = Math.floor((Math.random() * arrayPalabras.length));
             }
+            showData.append(html);
+            html = "";
             letrasPalabrasUnique = letrasPalabras.unique();
             $("input").each(function(a){
                 $(this).attr("id",letrasPalabras[a]);
               });
+            $(".divPalabra").each(function(z){
+              $(this).children().each(function(){
+                for (var i = 0; i < letrasPalabrasUnique.length; i++) {
+                  if ($(this).attr('id') == letrasPalabrasUnique[i]){
+                    if (i >= 9) {
+                      html += "<span class='m'>" + (i+1) + "</span>";
+                    } else html += "<span>" + (i+1) + "</span>";
+                  }
+                }
 
+              });
+              $(this).before(html);
+              html = "";
+            });
           });
         </script>
   </body>
