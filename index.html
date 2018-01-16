@@ -11,6 +11,9 @@
     <div id="res">
 
     </div>
+    <div class="palabras">
+
+    </div>
     <script
 src="https://code.jquery.com/jquery-3.2.1.js"
 integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
@@ -20,11 +23,38 @@ crossorigin="anonymous"></script>
         <script>
           $(document).ready(function(){
             var showData = $('#res');
-            var arrayPalabras = { palabra : "", pista : ""};
+            var arrayPalabras = [];
+            var arrayPistas = [];
+            var letrasPalabras = [];
+            var dic =  new Array();
+            var numeros = 0;
+            var letrasPalabrasUnique;
+            Array.prototype.unique = function() {
+              return this.filter(function (value, index, self) {
+              return self.indexOf(value) === index;
+              });
+            }
             $.getJSON('logogrifo.json', function(data){
-              $.each(data, function (i, item){
-                arrayPalabras['palabra'] = item.palabra;
-                arrayPalabras['pista'] = item.pista;
+              $.each(data, function(key, val){
+                arrayPalabras.push(data[key].palabra);
+                arrayPistas.push(data[key].definicion);
+              });
+            var randomIndex = Math.floor((Math.random() * arrayPalabras.length));
+            for (var i = 0; i < 7; i++) {
+              showData.append("<div class='row'>");
+              for (var e = 0; e < arrayPalabras[randomIndex].length; e++) {
+                showData.append("<input type='text' size='1' maxlength='1'/>");
+                letrasPalabras.push(arrayPalabras[randomIndex][e]);
+              }
+              showData.append("</div>");
+              arrayPalabras.splice(randomIndex, 1);
+              showData.append("<p>"+arrayPistas[randomIndex]+"</p>");
+              arrayPistas.splice(randomIndex, 1);
+              randomIndex = Math.floor((Math.random() * arrayPalabras.length));
+            }
+            letrasPalabrasUnique = letrasPalabras.unique();
+            $("input").each(function(a){
+                $(this).attr("id",letrasPalabras[a]);
               });
             });
           });
