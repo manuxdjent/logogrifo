@@ -21,7 +21,6 @@ crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
         <script>
-          $(document).ready(function(){
             var showData = $('#res');
             var arrayPalabras = [];
             var arrayPistas = [];
@@ -29,16 +28,20 @@ crossorigin="anonymous"></script>
             var dic =  new Array();
             var numeros = 0;
             var letrasPalabrasUnique;
+            // Prototype para eliminar elementos repetidos en un array.
             Array.prototype.unique = function() {
               return this.filter(function (value, index, self) {
               return self.indexOf(value) === index;
               });
             }
+            // Obtención de palabras y pistas.
             $.getJSON('logogrifo.json', function(data){
               $.each(data, function(key, val){
                 arrayPalabras.push(data[key].palabra);
                 arrayPistas.push(data[key].definicion);
               });
+            });
+          $(document).ready(function(){
             var randomIndex = Math.floor((Math.random() * arrayPalabras.length));
             for (var i = 0; i < 7; i++) {
               showData.append("<div class='row'>");
@@ -56,7 +59,7 @@ crossorigin="anonymous"></script>
             $("input").each(function(a){
                 $(this).attr("id",letrasPalabras[a]);
               });
-            });
+
           });
         </script>
   </body>
