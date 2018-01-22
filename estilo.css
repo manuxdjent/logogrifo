@@ -4,3 +4,6 @@ span{
 span.m{
   margin-left: -0.5em;
 }
+th {
+  text-align: center;
+}

@@ -26,7 +26,6 @@ crossorigin="anonymous"></script>
             var arrayPalabras = [];
             var arrayPistas = [];
             var letrasPalabras = [];
-            var dic =  new Array();
             var numeros = 0;
             var letrasPalabrasUnique;
             var html = "";
@@ -61,22 +60,38 @@ crossorigin="anonymous"></script>
             html = "";
             letrasPalabrasUnique = letrasPalabras.unique();
             $("input").each(function(a){
-                $(this).attr("id",letrasPalabras[a]);
+                $(this).attr("name",letrasPalabras[a]);
               });
             $(".divPalabra").each(function(z){
               $(this).children().each(function(){
                 for (var i = 0; i < letrasPalabrasUnique.length; i++) {
-                  if ($(this).attr('id') == letrasPalabrasUnique[i]){
+                  if ($(this).attr('name') == letrasPalabrasUnique[i]){
                     if (i >= 9) {
                       html += "<span class='m'>" + (i+1) + "</span>";
                     } else html += "<span>" + (i+1) + "</span>";
                   }
                 }
-
               });
               $(this).before(html);
               html = "";
             });
+            $("input").on('change',function(){
+              //alert($(this).val());
+              if ($(this).val() != "") {
+              var letraJugador = $(this).val().toUpperCase();
+              if ($(this).attr('name') == letraJugador) {
+                $("input[name='"+letraJugador+"']").val(letraJugador);
+                $("input[name='"+letraJugador+"']").attr('disabled','disabled');
+                if ($(":disabled").length == letrasPalabras.length) {
+                  alert("juego finalizado");
+                }
+                //alert($(":disabled").length);
+              }
+              else {
+                $(this).val("");
+              }
+            }
+              });
           });
         </script>
   </body>
