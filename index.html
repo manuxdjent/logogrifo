@@ -51,6 +51,8 @@ crossorigin="anonymous"></script>
 
           $(document).ready(function(){
             var randomIndex = Math.floor((Math.random() * arrayPalabras.length));
+            var arrayPalabrasSort = [];
+
             for (var i = 0; i < 7; i++) {
               html += "<div class='divPalabra'>";
               for (var e = 0; e < arrayPalabras[randomIndex].length; e++) {
@@ -62,7 +64,11 @@ crossorigin="anonymous"></script>
               html += "<p>"+arrayPistas[randomIndex]+"</p>";
               arrayPistas.splice(randomIndex, 1);
               randomIndex = Math.floor((Math.random() * arrayPalabras.length));
+              // arrayPalabras.sort(function(a, b) {
+              //   return a.length - b.length;
+              // }).reverse();
             }
+
             showData.append(html);
             html = "";
             letrasPalabrasUnique = letrasPalabras.unique();
